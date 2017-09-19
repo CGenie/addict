@@ -28,10 +28,10 @@ defmodule Addict.Mixfile do
      {:phoenix, "~> 1.3"},
      {:ecto, "~> 2.0"},
      {:comeonin, "~> 2.1" },
-     {:mailgun, "~> 0.1"},
      {:mock, "~> 0.1.3", only: :test},
      {:postgrex, "~> 0.11", only: :test},
      {:earmark, "~> 0.2", only: :dev},
+     {:mailgun, github: "chrismccord/mailgun", branch: "master", override: true},
      {:ex_doc, "~> 0.11", only: :dev}]
   end
 
