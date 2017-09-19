@@ -9,7 +9,7 @@ defmodule Mix.Tasks.Addict.Generate.Boilerplate do
   embed_template :view, """
   defmodule Addict.AddictView do
     use Phoenix.HTML
-    use Phoenix.View, root: "lib/templates/"
+    use Phoenix.View, root: "lib/#{guess_application_web_directory}/templates/"
     import Phoenix.Controller, only: [view_module: 1]
     import <%= @base_route_helper %>
   end
@@ -33,19 +33,19 @@ defmodule Mix.Tasks.Addict.Generate.Boilerplate do
   end
 
   defp create_addict_templates do
-    create_file Path.join(["lib", "templates", "addict", "addict.html.eex"])
+    create_file Path.join(["lib", guess_application_web_directory, "templates", "addict", "addict.html.eex"])
                 |> Path.relative_to(Mix.Project.app_path),
                 template_text
-    create_file Path.join(["lib", "templates", "addict", "login.html.eex"])
+    create_file Path.join(["lib", guess_application_web_directory, "templates", "addict", "login.html.eex"])
                 |> Path.relative_to(Mix.Project.app_path),
                 login_text
-    create_file Path.join(["lib", "templates", "addict", "register.html.eex"])
+    create_file Path.join(["lib", guess_application_web_directory, "templates", "addict", "register.html.eex"])
                 |> Path.relative_to(Mix.Project.app_path),
                 register_text
-    create_file Path.join(["lib", "templates", "addict", "recover_password.html.eex"])
+    create_file Path.join(["lib", guess_application_web_directory, "templates", "addict", "recover_password.html.eex"])
                 |> Path.relative_to(Mix.Project.app_path),
                 recover_password_text
-    create_file Path.join(["lib", "templates", "addict", "reset_password.html.eex"])
+    create_file Path.join(["lib", guess_application_web_directory, "templates", "addict", "reset_password.html.eex"])
                 |> Path.relative_to(Mix.Project.app_path),
                 reset_password_text
   end
@@ -58,6 +58,10 @@ defmodule Mix.Tasks.Addict.Generate.Boilerplate do
 
   defp guess_application_name do
     Mix.Project.config()[:app] |> Atom.to_string |> Mix.Utils.camelize
+  end
+
+  defp guess_application_web_directory do
+    guess_application_name <> "_web" |> String.downcase
   end
 
   defp addict_config_already_exists?(configs_path) do
