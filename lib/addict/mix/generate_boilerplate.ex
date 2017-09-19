@@ -22,46 +22,45 @@ defmodule Mix.Tasks.Addict.Generate.Boilerplate do
       Mix.shell.error "[x] Please make sure your Addict configuration exists first. Generate it via mix:"
       Mix.shell.error "[x] mix addict.generate.configs"
     else
-      base_module = guess_application_name
       Mix.shell.info "[o] Generating Addict boilerplate"
 
-      create_addict_templates
-      create_addict_view
+      create_addict_templates()
+      create_addict_view()
     end
 
     Mix.shell.info "[o] Done!"
   end
 
   defp create_addict_templates do
-    create_file Path.join(["lib", guess_application_web_directory, "templates", "addict", "addict.html.eex"])
+    create_file Path.join(["lib", guess_application_web_directory(), "templates", "addict", "addict.html.eex"])
                 |> Path.relative_to(Mix.Project.app_path),
-                template_text
-    create_file Path.join(["lib", guess_application_web_directory, "templates", "addict", "login.html.eex"])
+                template_text()
+    create_file Path.join(["lib", guess_application_web_directory(), "templates", "addict", "login.html.eex"])
                 |> Path.relative_to(Mix.Project.app_path),
-                login_text
-    create_file Path.join(["lib", guess_application_web_directory, "templates", "addict", "register.html.eex"])
+                login_text()
+    create_file Path.join(["lib", guess_application_web_directory(), "templates", "addict", "register.html.eex"])
                 |> Path.relative_to(Mix.Project.app_path),
-                register_text
-    create_file Path.join(["lib", guess_application_web_directory, "templates", "addict", "recover_password.html.eex"])
+                register_text()
+    create_file Path.join(["lib", guess_application_web_directory(), "templates", "addict", "recover_password.html.eex"])
                 |> Path.relative_to(Mix.Project.app_path),
-                recover_password_text
-    create_file Path.join(["lib", guess_application_web_directory, "templates", "addict", "reset_password.html.eex"])
+                recover_password_text()
+    create_file Path.join(["lib", guess_application_web_directory(), "templates", "addict", "reset_password.html.eex"])
                 |> Path.relative_to(Mix.Project.app_path),
-                reset_password_text
+                reset_password_text()
   end
 
   defp create_addict_view do
-    view_file = Path.join(["lib", guess_application_web_directory, "views", "addict_view.ex"])
+    view_file = Path.join(["lib", guess_application_web_directory(), "views", "addict_view.ex"])
                 |> Path.relative_to(Mix.Project.app_path)
-    create_file view_file, view_template(base_route_helper: (guess_application_name <> ".Router.Helpers"), web_directory: guess_application_web_directory)
+    create_file view_file, view_template(base_route_helper: (guess_application_name() <> ".Router.Helpers"), web_directory: guess_application_web_directory())
   end
 
   defp guess_application_name do
-    Mix.Project.config()[:app] |> Atom.to_string |> Mix.Utils.camelize
+    Mix.Project.config()[:app] |> Atom.to_string |> Macro.camelize
   end
 
   defp guess_application_web_directory do
-    guess_application_name <> "_web" |> String.downcase
+    guess_application_name() <> "_web" |> String.downcase
   end
 
   defp addict_config_already_exists?(configs_path) do
