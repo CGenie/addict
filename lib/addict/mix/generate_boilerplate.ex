@@ -9,7 +9,7 @@ defmodule Mix.Tasks.Addict.Generate.Boilerplate do
   embed_template :view, """
   defmodule Addict.AddictView do
     use Phoenix.HTML
-    use Phoenix.View, root: "web/templates/"
+    use Phoenix.View, root: "lib/templates/"
     import Phoenix.Controller, only: [view_module: 1]
     import <%= @base_route_helper %>
   end
@@ -33,25 +33,25 @@ defmodule Mix.Tasks.Addict.Generate.Boilerplate do
   end
 
   defp create_addict_templates do
-    create_file Path.join(["web", "templates", "addict", "addict.html.eex"])
+    create_file Path.join(["lib", "templates", "addict", "addict.html.eex"])
                 |> Path.relative_to(Mix.Project.app_path),
                 template_text
-    create_file Path.join(["web", "templates", "addict", "login.html.eex"])
+    create_file Path.join(["lib", "templates", "addict", "login.html.eex"])
                 |> Path.relative_to(Mix.Project.app_path),
                 login_text
-    create_file Path.join(["web", "templates", "addict", "register.html.eex"])
+    create_file Path.join(["lib", "templates", "addict", "register.html.eex"])
                 |> Path.relative_to(Mix.Project.app_path),
                 register_text
-    create_file Path.join(["web", "templates", "addict", "recover_password.html.eex"])
+    create_file Path.join(["lib", "templates", "addict", "recover_password.html.eex"])
                 |> Path.relative_to(Mix.Project.app_path),
                 recover_password_text
-    create_file Path.join(["web", "templates", "addict", "reset_password.html.eex"])
+    create_file Path.join(["lib", "templates", "addict", "reset_password.html.eex"])
                 |> Path.relative_to(Mix.Project.app_path),
                 reset_password_text
   end
 
   defp create_addict_view do
-    view_file = Path.join(["web", "views", "addict_view.ex"])
+    view_file = Path.join(["lib", "views", "addict_view.ex"])
                 |> Path.relative_to(Mix.Project.app_path)
     create_file view_file, view_template(base_route_helper: (guess_application_name <> ".Router.Helpers"))
   end
