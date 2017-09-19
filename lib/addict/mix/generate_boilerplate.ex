@@ -51,7 +51,7 @@ defmodule Mix.Tasks.Addict.Generate.Boilerplate do
   end
 
   defp create_addict_view do
-    view_file = Path.join(["lib", "views", "addict_view.ex"])
+    view_file = Path.join(["lib", guess_application_web_directory, "views", "addict_view.ex"])
                 |> Path.relative_to(Mix.Project.app_path)
     create_file view_file, view_template(base_route_helper: (guess_application_name <> ".Router.Helpers"), web_directory: guess_application_web_directory)
   end
